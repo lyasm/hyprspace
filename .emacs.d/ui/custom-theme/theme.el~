@@ -1,0 +1,7 @@
+(require 'autothemer)
+(autothemer-deftheme oxocarbon-custom
+  "Humble Oxocarbon for Emacs")
+
+
+
+

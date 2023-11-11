@@ -1,0 +1,2 @@
+rm ~/.config/ags/data/astronaut.json
+curl -s -X 'GET' 'https://ll.thespacedevs.com/2.2.0/astronaut/?in_space=true' -H 'accept: application/json' | jq -c '[.results[] | {name, time_in_space, profile_image: .profile_image_thumbnail}]'  > ~/.config/ags/data/astronaut.json

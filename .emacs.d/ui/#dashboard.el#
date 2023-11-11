@@ -1,0 +1,128 @@
+;; -*- lexical-binding: t -*-
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+					;(delete-other-windows)
+  )
+
+(use-package recentf
+  :ensure nil
+  :hook (after-init . recentf-mode)
+  :custom
+  (recentf-auto-cleanup "05:00am")
+  (recentf-max-saved-items 200)
+  (recentf-exclude '((expand-file-name package-user-dir)
+                     ".cache"
+                     ".cask"
+                     ".elfeed"
+                     "bookmarks"
+                     "cache"
+                     "ido.*"
+                     "persp-confs"
+                     "recentf"
+                     "undo-tree-hist"
+                     "url"
+                     "COMMIT_EDITMSG\\'")))
+
+(setq dashboard-banner-logo-title "Emacs: Turning text editing into an extreme sport since 1976")
+;; Set the title
+;; Set the banner
+(setq dashboard-startup-banner "/home/lyasm/Images/resized/emacs-glass.png")
+
+;; Content is not centered by default. To center, set
+(setq dashboard-center-content t)
+
+;; To disable shortcut "jump" indicators for each section, set
+(setq dashboard-show-shortcuts nil)
+;; use `all-the-icons'
+(setq dashboard-icon-type 'all-the-icons)
+(setq dashboard-set-file-icons t)
+(setq dashboard-set-navigator nil)
+
+(defun shorten-string (str first last)
+  "Shorten a string to keep the [first] first and [last] last characters and add '...' in the middle"
+  (setq str (replace-regexp-in-string "[-_\\/]" "" str))
+  (setq str (replace-regexp-in-string "\\(.*\\)\\(\\.\\).*" "\\1" str))
+  (if (> (length str) (+ first last 3))
+      (concat (substring str 0 first) "..." (substring str (- (length str) last)))
+    ;; (format (concat "%" (number-to-string (+ first last)) "s") str)
+    (concat (make-string (/ (- (+ last first 3) (length str)) 2) ?\s) str (make-string (/ (- (+ last first 3) (length str)) 2) ?\s))
+    ))
+
+(defun dashboard-insert-custom (list-size)
+  (dashboard-insert-heading "Recent Files:"
+                            nil
+                            (all-the-icons-faicon "file-o"
+                                                  :height 1.2
+                                                  :v-adjust 0.0
+                                                  :face 'dashboard-heading))
+  (insert "\n")
+  (recentf-load-list)
+
+
+  (setq n 1)
+  (let ((recent-files (seq-take recentf-list 10)))
+    (dolist (file recent-files)
+      (insert (all-the-icons-icon-for-file file) " ")
+      (insert-button (shorten-string (file-name-nondirectory file) 6 5)
+		     'action (lambda (button) (find-file file))
+		     'face 'dashboard-items-face
+		     'help-echo file)
+      (if (> n 1) (progn (insert "\n") (setq n 1)) (progn (setq n (+ n 1)) (insert "\t")))
+      )
+    )
+  )
+
+
+(defvar dashboard-current-time "Null")
+
+(defun dashboard-insert-time (list-size)
+  "Insert the current time in the dashboard buffer."
+  (when (eq list-size 1) ; Only insert when dashboard buffer is being created
+    (insert "Current Time: ")
+    (insert dashboard-current-time)
+    (insert "\n")
+    (run-at-time nil 1 #'dashboard-update-time)))  ; Update time every second
+
+(defun dashboard-update-time ()
+  "Function to update the time display in the dashboard."
+  (setq dashboard-current-time (format-time-string "%Y-%m-%d %H:%M:%S"))
+  (dashboard-insert-time 1))
+
+
+(defun dashboard-update-time ()
+  "Function to update the time display in the dashboard."
+  (with-current-buffer dashboard-buffer-name
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "Current Time: " nil t)
+        (delete-region (match-beginning 0) (point-at-eol))
+        (insert (format-time-string "%Y-%m-%d %H:%M:%S"))
+        (insert "\n")))))
+
+
+(defun random-fortune (fortune-file)
+  "Get a random fortune message from the specified FORTUNE-FILE."
+  (interactive "Specify a fortune file: ")
+  (with-temp-buffer
+    (call-process "fortune" nil t nil fortune-file)
+    (buffer-string)))
+
+(setq dashboard-footer-messages (list (random-fortune "/usr/share/fortune/linux")))
+
+(setq dashboard-footer-icon (all-the-icons-faicon "linux"
+                                                   :height 1.1
+                                                   :v-adjust -0.05))
+
+(add-to-list 'dashboard-item-generators '(custom . dashboard-insert-custom))
+(add-to-list 'dashboard-item-generators '(time . dashboard-insert-time))
+(setq dashboard-items '((custom)
+			;(recents  . 7)
+                        (bookmarks . 5)
+                        (projects . 2)
+			(time)))
+
+(custom-set-faces
+ '(dashboard-banner-logo-title ((t (:height 120)))))
+(setq dashboard-image-banner-max-height (* (min (frame-height) (/ (frame-width) 2.5)) 6))

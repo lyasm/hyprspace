@@ -1,0 +1,282 @@
+* {
+    all: unset; }
+
+* {
+    font-family: SpaceMono Nerd Font Mono;
+    font-family: "3270 Nerd Font Mono";
+    font-size: 16px;
+}
+
+@define-color base00 #161616;
+@define-color base01 #262626;
+@define-color base02 #393939;
+@define-color base03 #525252;
+@define-color base04 #dde1e6;
+@define-color base05 #f2f4f8;
+@define-color base06 #ffffff;
+@define-color base07 #08bdba;
+@define-color base08 #3ddbd9;
+@define-color base09 #78a9ff;
+@define-color base0a #ee5396;
+@define-color base0b #33b1ff;
+@define-color base0c #ff7eb6;
+@define-color base0d #42be65;
+@define-color base0e #be95ff;
+@define-color base0f #82cfff;
+@define-color Red50  #fa4d56;
+
+
+
+label {
+    font-weight: bold;
+}
+
+.bar {
+    padding: 10px 0px 5px;
+    margin: -5px 10px 0px;
+    border-radius: 0px 0px 10px 10px;
+    border: 1px groove;
+    background-color: @base00;
+    border-color: @base04;
+}
+.bg-ws {
+    font-family: SpaceMono Nerd Font Mono;
+
+    min-width: 30px;
+    min-height: 20px;
+    border: 0px solid;
+}
+
+.bg-focused {
+    min-width: 30px;
+    min-height: 20px;
+    border: 0px solid;
+    margin: 0px 10px;
+}
+
+.workspaces button {
+    font-family: SpaceMono Nerd Font Mono;
+    font-size: 12px;
+    margin: 2px 5px;
+    border-radius: 100px;
+    background-color: @base02;
+    color: @base06;
+}
+
+.workspaces button:hover {
+    font-family: SpaceMono Nerd Font Mono;
+    background-color: rgba(221, 225, 230, 0.4);
+}
+
+.workspaces button:active,
+.media:active {
+    font-family: SpaceMono Nerd Font Mono;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+
+.workspaces button.focused {
+    font-family: SpaceMono Nerd Font Mono;
+    border: 1px solid @base09;
+    margin: 0px 13px;
+}
+
+@keyframes orbit {
+    0%{
+	margin-left: 31px;
+	margin-right: 25px;
+	margin-top: 19px;
+	margin-bottom: 19px;
+  background-color: #000;
+    }
+    7% {
+        margin-left: 37px;
+	margin-right: 7px;
+	margin-top: 12px;
+	margin-bottom: 4px;
+  background-color: #fff;
+    }
+    15% {
+        margin-left: 40px;
+	margin-right: 2px;
+	margin-top: 16px;/* 7 */
+	margin-bottom: 2px;/* 7 */
+    }
+    45% {
+	margin-left: 21px;
+	margin-right: 15px;
+	margin-top: 5.5px;
+	margin-bottom: 5.5px;
+
+    }
+    60% {
+        margin-left: 2px;
+	margin-right: 40px;
+	margin-top: 2px;
+	margin-bottom: 16px;
+    }
+    67% {
+        margin-left: 7px;
+	margin-right: 37px;
+	margin-top: 6px; /* 9 */
+	margin-bottom: 12px; /* 9 */
+  background-color: #fff;
+    }
+    75% {
+	margin-left: 18px;
+	margin-right: 35px;
+	margin-top: 19px;
+	margin-bottom: 19px;
+  background-color: #000;
+    }
+        100% {
+	margin-left: 18px;
+	margin-right: 35px;
+	margin-top: 19px;
+	margin-bottom: 19px;
+  background-color: #000;
+    }
+}
+
+.orbiter {
+    margin-top: 7px;
+    font-family: SpaceMono Nerd Font Mono;
+    margin-bottom: 7px;
+    min-width: 0;
+    font-size: 0;
+  min-height: 0;
+  border-radius: 50px;
+  /* border-radius: 50% */;
+  background-color: #fff;
+    animation: orbit infinite 4s cubic-bezier(0.3, 0.7, 0.70, 0.7);
+}
+
+.Systray {
+    margin: 0px 12px;
+    padding: 0px 3px;
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: @base0b;
+}
+.SystrayItem {
+    margin: 0px 2px;
+    padding: 1px 4px;
+}
+
+.notification image {
+    color: yellow;
+    margin-left: 1em;
+}
+
+.clock {
+    margin: 0 10px 0px 10px;
+    font-size: 1.1em;
+}
+
+scale trough {
+  background-color: @base02;
+  border-radius: 16px;
+  min-height: 4px;
+  min-width: 20px;
+  margin: 0px 10px;
+}
+
+scale trough highlight{
+  background-color: @base09;
+  border-radius: 16px;
+}
+
+
+.progress {
+    min-height: 20px;
+    min-width: 20px;
+    font-size: 2px;
+    margin: 0px 10px;
+    color: @base02;
+    background-color: @base0d;
+}
+
+.Battery_Icon {
+    font-size: 10px;;
+    color: #fff
+}
+
+.cpu_progress {
+    border: none;
+    min-height: 20px;
+    min-width: 20px;
+    font-size: 2px;
+    margin: 0px 10px;
+    color: @base02;
+    background-color: @base0e;
+}
+
+.cpu_progress_high {
+    border: none;
+    min-height: 20px;
+    min-width: 20px;
+    font-size: 4px;
+    margin: 0px 10px;
+    color: @base02;
+    background-color: @Red50;
+}
+
+.mem_progress {
+    border: none;
+    min-height: 20px;
+    min-width: 20px;
+    font-size: 2px;
+    margin: 0px 10px;
+    color: @base02;
+    background-color: @base08;
+}
+.cpubox {
+    margin: 0px 5px;
+}
+.membox {
+    margin: 0px 5px;
+}
+.batbox {
+    margin: 0px 5px;
+}
+
+
+.mem_progress_high {
+    border: none;
+    min-height: 20px;
+    min-width: 20px;
+    font-size: 4px;
+    margin: 0px 10px;
+    color: @base02;
+    background-color: @Red50;
+}
+
+.Seperator {
+    margin: 0px 20px;
+}
+
+.weatherbox {
+    min-height: 200px;
+    min-width: 400px;
+    border-radius: 0px 0px 7px 7px;
+    border: 1px groove;
+    border-color: @base04;
+     background-color: @base01; 
+}
+
+tooltip {
+    background-color: #000;
+}
+
+tooltip-markup {
+    background-color: #fff;
+}
+
+.name {
+    margin: 15px 20px;
+}
+
+.spacetime {
+    margin: -12px 10px 15px 30px;
+}
